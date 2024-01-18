@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Chord Diagrams</title>
+    <script async type="text/javascript" src="https://www.scales-chords.com/api/scales-chords-api.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Find a Piano Chord</span> Diagram!</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+	<p></p>
+    <div class="container">
+        <input type="text" id="chordInput" placeholder="Enter Chord (e.g., D#m(maj9))">
+        <button onclick="updateAndShowChord()">Show Chord</button>
+        <ins id="chordContainer" class="scales_chords_api hidden" chord="C" instrument="piano"></ins>
+    </div>
+    <script>
+        // Function to update and show chord
+        function updateAndShowChord() {
+            var chordName = document.getElementById('chordInput').value;
+            var chordContainer = document.getElementById('chordContainer');
+
+            if (chordName.trim() !== "") {
+                // Reload the page with the updated chord in the URL
+                window.location.href = window.location.pathname + "?chord=" + encodeURIComponent(chordName);
+            } else {
+                alert("Please enter a chord name.");
+            }
+        }
+
+        // Check for a chord parameter in the URL and update the chord element
+        window.onload = function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var chordName = urlParams.get('chord');
+            if (chordName) {
+                var chordContainer = document.getElementById('chordContainer');
+                chordContainer.setAttribute('chord', chordName);
+                chordContainer.classList.remove('hidden');
+
+                // Dynamically load the scales-chords API script
+                var scriptElement = document.createElement('script');
+                scriptElement.src = "https://www.scales-chords.com/api/scales-chords-api.js";
+                scriptElement.async = true;
+
+                // Set up a callback to execute after the script is loaded
+                scriptElement.onload = function () {
+                    scalesChordsApiRender({ chord: chordName });
+                    scalesChordsApiRender({ chord: "G" });
+                };
+
+                // Append the script element to the document head
+                document.head.appendChild(scriptElement);
+            }
+
+            // Retrieve and set the last chord value from local storage
+            var lastChord = localStorage.getItem('lastChord');
+            if (lastChord) {
+                document.getElementById('chordInput').value = lastChord;
+                updateAndShowChord(); // Show the chord image on page load
+            }
+
+            // Trigger updateAndShowChord when Enter key is pressed in the input field
+            document.getElementById('chordInput').addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default behavior of Enter (form submission)
+                    updateAndShowChord();
+                }
+            });
+
+            // Place the cursor in the text field on page load
+            document.getElementById('chordInput').focus();
+        };
+    </script>
+</body>
+</html>
