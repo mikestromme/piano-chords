@@ -1,0 +1,58 @@
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+}
+.container {
+	width: 80%;
+	margin: auto;
+	overflow: hidden;
+}
+header {
+	background: #000000; /*#50b3a2;*/
+	background-image: url(images/keyboard.jpg); /* opacity: 0.5; */
+	color: #e8491d;
+	padding-top: 30px;
+	min-height: 70px;
+	border-bottom: #e8491d 3px solid;
+}
+
+.bordered-text {
+  border: 10px solid #000; /* You can customize the width, style, and color of the border */
+  padding: 10px; /* Optional: Add padding to create space between text and border */
+}
+
+
+header a {
+	color: #e8491d;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 36px;
+}
+header ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	overflow: hidden;
+}
+header li {
+	float: left;
+	display: inline;
+	padding: 0 20px 0 20px;
+}
+header #branding {
+	float: left;
+}
+header #branding h1 {
+	margin: 0;
+}
+header nav {
+	float: right;
+	margin-top: 10px;
+}
+.hidden {
+	display: none;
+}
+ 
